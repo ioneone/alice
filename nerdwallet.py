@@ -4,10 +4,11 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 from gmail import Client as GmailClient
+import sys
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')
 NERD_WALLET_PASSWORD = os.getenv('NERD_WALLET_PASSWORD')
-SLEEP_SECONDS = 2
+SLEEP_SECONDS = 5
 
 
 class Client:
