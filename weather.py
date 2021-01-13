@@ -1,6 +1,7 @@
 import settings
 import os
 import requests
+from gmail import Client as GmailClient
 
 OPEN_WEATHER_MAP_API_KEY = os.getenv('OPEN_WEATHER_MAP_API_KEY')
 LOS_ANGELES_LATITUDE = 34.052235
@@ -8,6 +9,14 @@ LOS_ANGELES_LONGITUDE = -118.243683
 
 
 class Client:
+
+    def send_email_if_rain_today(self):
+        if not self.check_rain_today():
+            return
+
+        gmailClient = GmailClient()
+        gmailClient.send(
+            "Rain Alert 🌧", "Hey, it will rain today. Don't forget to bring an umbrella! ☂️")
 
     def check_rain_today(self):
         """Check if it will rain today."""

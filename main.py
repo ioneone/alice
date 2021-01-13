@@ -1,12 +1,13 @@
-import os
-import smtplib
-import settings
-from gmail import Client as GmailClient
+"""
+Assume `python main.py` is executed every morning, 
+"""
+
 from weather import Client as WeatherClient
+from nerdwallet import Client as NerdWalletClient
+from datetime import date
 
-gmailClient = GmailClient()
 weatherClient = WeatherClient()
+weatherClient.send_email_if_rain_today()
 
-if weatherClient.check_rain_today():
-    gmailClient.send(
-        "Rain Alert 🌧", "Hey, it will rain today. Don't forget to bring an umbrella! ☂️")
+nerdWalletClient = NerdWalletClient()
+nerdWalletClient.check_net_worth()
