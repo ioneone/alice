@@ -12,7 +12,7 @@ SLEEP_SECONDS = 2
 
 class Client:
 
-    def check_net_worth():
+    def check_net_worth(self):
         gmailClient = GmailClient()
         gmailClient.send("NerdWallet Login",
                          "Hey Junhong, I'm logging in to your NerdWallet account now "
