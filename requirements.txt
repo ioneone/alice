@@ -2,6 +2,9 @@ autocommand==2.2.1
 autopep8==1.5.4
 certifi==2020.12.5
 chardet==4.0.0
+colorama==0.4.4
+configparser==5.0.1
+crayons==0.4.0
 filelock==3.0.12
 future==0.18.2
 idna==2.10
@@ -24,4 +27,5 @@ six==1.15.0
 tldextract==3.1.0
 toml==0.10.2
 urllib3==1.26.2
+webdriver-manager==3.2.2
 xmltodict==0.12.0
