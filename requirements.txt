@@ -10,7 +10,7 @@ mintapi==1.44
 mock==4.0.3
 numpy==1.19.5
 oathtool==2.3.0
-pandas==1.2.0
+pandas==1.1.5
 path==15.0.1
 pycodestyle==2.6.0
 python-dateutil==2.8.1
