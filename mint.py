@@ -8,7 +8,7 @@ MINT_PASSWORD = os.getenv('MINT_PASSWORD')
 mint = mintapi.Mint(
     email=MY_GMAIL_ADDRESS,
     password=MINT_PASSWORD,
-    mfa_method='email'
+    mfa_method='email',
     headless=True
 )
 
