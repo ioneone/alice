@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 from gmail import Client as GmailClient
 import sys
-from selenium.webdriver.common.action_chains import ActionChains
+import traceback
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')
 NERD_WALLET_PASSWORD = os.getenv('NERD_WALLET_PASSWORD')
@@ -14,6 +14,7 @@ SLEEP_SECONDS = 2
 
 
 class Client:
+    """NerdWallet scraper."""
 
     def check_net_worth(self):
         gmailClient = GmailClient()
@@ -42,7 +43,6 @@ class Client:
         browser.set_window_size(1440, 900)
 
         try:
-
             # Visit NerdWallet
             browser.get('https://www.nerdwallet.com/home/signin')
             time.sleep(SLEEP_SECONDS)
@@ -61,11 +61,12 @@ class Client:
             browser.get('https://www.nerdwallet.com/home/dashboard/net-worth')
             time.sleep(SLEEP_SECONDS)
 
-            net_worth = browser.find_element_by_tag_name('h4').text
+            net_worth = browser.find_element_by_tag_name('h').text
 
         except:
-            print(f"Unexpected error: {sys.exc_info()[0]}")
-            gmailClient.send("NerdWallet client error", sys.exc_info()[0])
+            traceback.print_exc()
+            gmailClient.send("NerdWallet Client Error",
+                             f"Unexpected error: {sys.exc_info()[0]}\nYour NerdWallet scraper may be outdated.")
         else:
             print(f"Your net worth is {net_worth}")
         finally:
