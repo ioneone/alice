@@ -61,7 +61,7 @@ class Client:
             browser.get('https://www.nerdwallet.com/home/dashboard/net-worth')
             time.sleep(SLEEP_SECONDS)
 
-            net_worth = browser.find_element_by_tag_name('h').text
+            net_worth = browser.find_element_by_tag_name('h4').text
 
         except:
             traceback.print_exc()
