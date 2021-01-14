@@ -1,14 +1,16 @@
 import settings
 import os
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 from gmail import Client as GmailClient
 import sys
+from selenium.webdriver.common.action_chains import ActionChains
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')
 NERD_WALLET_PASSWORD = os.getenv('NERD_WALLET_PASSWORD')
-SLEEP_SECONDS = 5
+SLEEP_SECONDS = 2
 
 
 class Client:
@@ -21,12 +23,28 @@ class Client:
                          "notification from NerdWallet about a new login. Please "
                          "ignore it.")
 
-        browser = webdriver.Chrome(ChromeDriverManager().install())
+        options = Options()
+
+        # these are the options automatically applied to heroku chrome driver
+        options.add_argument('--disable-gpu')
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+
+        # pretend to be a human
+        options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
+
+        browser = webdriver.Chrome(
+            ChromeDriverManager().install(), options=options)
+
+        # Some element sizes become 0 in headless mode.
+        # Explicitly set the window size to prevent that.
+        browser.set_window_size(1440, 900)
 
         try:
+
             # Visit NerdWallet
-            browser.get(
-                'https://www.nerdwallet.com/home/signin?redirect_uri=/home/dashboard/home')
+            browser.get('https://www.nerdwallet.com/home/signin')
             time.sleep(SLEEP_SECONDS)
 
             # Login to my NerdWallet account
@@ -34,7 +52,9 @@ class Client:
                 'my-nerdwallet-1-3').send_keys(MY_GMAIL_ADDRESS)
             browser.find_element_by_id(
                 'my-nerdwallet-1-4').send_keys(NERD_WALLET_PASSWORD)
+
             browser.find_element_by_xpath("//button[@type='submit']").click()
+
             time.sleep(SLEEP_SECONDS)
 
             # Visit net worth page
@@ -43,9 +63,10 @@ class Client:
 
             net_worth = browser.find_element_by_tag_name('h4').text
 
-            print(f"Your net worth is {net_worth}")
         except:
             print(f"Unexpected error: {sys.exc_info()[0]}")
             gmailClient.send("NerdWallet client error", sys.exc_info()[0])
-
-        browser.close()
+        else:
+            print(f"Your net worth is {net_worth}")
+        finally:
+            browser.close()
