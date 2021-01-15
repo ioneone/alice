@@ -20,4 +20,4 @@ She tracks my net worth each month on Google Sheet.
 
 - [Selenium](https://github.com/SeleniumHQ/selenium/)
 - [NerdWallet](https://www.nerdwallet.com/)
-- [Google Sheets API](https://developers.google.com/sheets/api)
+- [Sheety API](https://sheety.co/docs)
