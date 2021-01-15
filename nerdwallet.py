@@ -7,22 +7,53 @@ import time
 from gmail import Client as GmailClient
 import sys
 import traceback
+import requests
+from datetime import date
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')
 NERD_WALLET_PASSWORD = os.getenv('NERD_WALLET_PASSWORD')
+SHEETY_TOKEN = os.getenv('SHEETY_TOKEN')
+SHEETY_API_ENDPOINT = os.getenv('SHEETY_API_ENDPOINT')
+SHEETY_NET_WORTH_TRACKER_SHEET_ID = os.getenv(
+    'SHEETY_NET_WORTH_TRACKER_SHEET_ID')
+
 SLEEP_SECONDS = 2
 
 
 class Client:
-    """NerdWallet scraper."""
 
-    def check_net_worth(self):
+    def append_net_worth_entry(self):
+        net_worth = self.get_net_worth()
+
+        headers = {
+            'Authorization': f"Bearer {SHEETY_TOKEN}"
+        }
+        json = {
+            SHEETY_NET_WORTH_TRACKER_SHEET_ID: {
+                'date': date.today().strftime("%m/%d/%Y"),
+                'netWorth': net_worth
+            }
+        }
+        response = requests.post(
+            f"{SHEETY_API_ENDPOINT}/{SHEETY_NET_WORTH_TRACKER_SHEET_ID}", headers=headers, json=json)
+        response.raise_for_status()
+
+    def notify_login(self):
+        """
+        Sends an email to me to tell me not to worry about
+        a new login from unrecognized device because every
+        time a tick runs, it is a new device.
+        """
         gmailClient = GmailClient()
         gmailClient.send("NerdWallet Login",
                          "Hey Junhong, I'm logging in to your NerdWallet account now "
                          "to keep track of your net worth. You may receive a "
                          "notification from NerdWallet about a new login. Please "
                          "ignore it.")
+
+    def get_net_worth(self):
+        """Get my current net worth from my NerdWallet account."""
+        self.notify_login()
 
         options = Options()
 
@@ -42,32 +73,30 @@ class Client:
         # Explicitly set the window size to prevent that.
         browser.set_window_size(1440, 900)
 
-        try:
-            # Visit NerdWallet
-            browser.get('https://www.nerdwallet.com/home/signin')
-            time.sleep(SLEEP_SECONDS)
+        # Visit NerdWallet
+        browser.get('https://www.nerdwallet.com/home/signin')
+        time.sleep(SLEEP_SECONDS)
 
-            # Login to my NerdWallet account
-            browser.find_element_by_id(
-                'my-nerdwallet-1-3').send_keys(MY_GMAIL_ADDRESS)
-            browser.find_element_by_id(
-                'my-nerdwallet-1-4').send_keys(NERD_WALLET_PASSWORD)
+        # Login to my NerdWallet account
+        browser.find_element_by_id(
+            'my-nerdwallet-1-3').send_keys(MY_GMAIL_ADDRESS)
+        browser.find_element_by_id(
+            'my-nerdwallet-1-4').send_keys(NERD_WALLET_PASSWORD)
 
-            browser.find_element_by_xpath("//button[@type='submit']").click()
+        browser.find_element_by_xpath("//button[@type='submit']").click()
 
-            time.sleep(SLEEP_SECONDS)
+        time.sleep(SLEEP_SECONDS)
 
-            # Visit net worth page
-            browser.get('https://www.nerdwallet.com/home/dashboard/net-worth')
-            time.sleep(SLEEP_SECONDS)
+        # Visit net worth page
+        browser.get('https://www.nerdwallet.com/home/dashboard/net-worth')
+        time.sleep(SLEEP_SECONDS)
 
-            net_worth = browser.find_element_by_tag_name('h4').text
+        # e.g. "$20,000"
+        net_worth = browser.find_element_by_tag_name('h4').text
 
-        except:
-            traceback.print_exc()
-            gmailClient.send("NerdWallet Client Error",
-                             f"Unexpected error: {sys.exc_info()[0]}\nYour NerdWallet scraper may be outdated.")
-        else:
-            print(f"Your net worth is {net_worth}")
-        finally:
-            browser.close()
+        # e.g. 20000
+        net_worth = int(net_worth.replace('$', '').replace(',', ''))
+
+        browser.close()
+
+        return net_worth

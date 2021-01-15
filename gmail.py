@@ -11,7 +11,7 @@ class Client:
 
     def send(self, subject: str, body: str):
         """Sends an email to me as Alice."""
-        header = f"From: Alice (bot) <{BOT_GMAIL_ADDRESS}>\r\nTo: {MY_GMAIL_ADDRESS}\r\nSubject: {subject}"
+        header = f"From: Alice 🤖 <{BOT_GMAIL_ADDRESS}>\r\nTo: {MY_GMAIL_ADDRESS}\r\nSubject: {subject}"
         msg = f"{header}\r\n\r\n{body}".encode('utf8')
 
         with smtplib.SMTP('smtp.gmail.com') as connection:
