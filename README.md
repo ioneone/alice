@@ -6,17 +6,31 @@
     <br>
 </div>
 
-Alice is my artificial virtual assistant. Here's what she does for me:
+Alice is my artificial virtual assistant.
 
-## Rain Alert 🌧
+## How It Works
+
+Alice is hosted on [Heroku](https://www.heroku.com/). Every morning, [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler) executes:
+
+```bash
+python main.py
+```
+
+to perform the tasks I tell her to do.
+
+## What She Does
+
+Here's the list of things she does for me:
+
+### Rain Alert 🌧
 
 Every morning, she checks if it will rain today in Los Angeles, and reminds me to bring an umbrella if it does.
 
 - [Weather API](https://openweathermap.org/api)
 
-## Net Worth Tracker 💰
+### Net Worth Tracker 💰
 
-She tracks my net worth each month on Google Sheet.
+Every month, she tracks my net worth on Google Sheets.
 
 - [Selenium](https://github.com/SeleniumHQ/selenium/)
 - [NerdWallet](https://www.nerdwallet.com/)
