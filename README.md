@@ -27,11 +27,3 @@ Here's the list of things she does for me:
 Every morning, she checks if it will rain today in Los Angeles, and reminds me to bring an umbrella if it does.
 
 - [Weather API](https://openweathermap.org/api)
-
-### Net Worth Tracker 💰
-
-Every month, she tracks my net worth on Google Sheets.
-
-- [Selenium](https://github.com/SeleniumHQ/selenium/)
-- [NerdWallet](https://www.nerdwallet.com/)
-- [Sheety API](https://sheety.co/docs)
