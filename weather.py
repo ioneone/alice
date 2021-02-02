@@ -1,7 +1,7 @@
 import settings
 import os
 import requests
-from gmail import Client as GmailClient
+from notification import Client as NotificationClient
 
 OPEN_WEATHER_MAP_API_KEY = os.getenv('OPEN_WEATHER_MAP_API_KEY')
 LOS_ANGELES_LATITUDE = 34.052235
@@ -10,12 +10,12 @@ LOS_ANGELES_LONGITUDE = -118.243683
 
 class Client:
 
-    def send_email_if_rain_today(self):
+    def send_sms_if_rain_today(self):
         if not self.check_rain_today():
             return
 
-        gmailClient = GmailClient()
-        gmailClient.send(
+        notificationClient = NotificationClient()
+        notificationClient.send_sms(
             "Rain Alert 🌧", "Hey, it will rain today. Don't forget to bring an umbrella! ☂️")
 
     def check_rain_today(self):
