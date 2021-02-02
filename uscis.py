@@ -20,6 +20,9 @@ class Client:
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
 
+        options.add_argument(
+            "user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36")
+
         self.driver = webdriver.Chrome(
             ChromeDriverManager().install(), options=options)
 
