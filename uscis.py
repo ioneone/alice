@@ -32,8 +32,9 @@ class Client:
 
     def send_status(self):
         status = self.get_status()
+        print(status)
         notificationClient = NotificationClient()
-        notificationClient.send_sms("OPT EAD Status", status)
+        notificationClient.send_email("OPT EAD Status", status)
 
     def get_status(self):
         self.driver.get('https://egov.uscis.gov/casestatus/landing.do')
