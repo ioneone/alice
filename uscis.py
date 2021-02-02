@@ -32,9 +32,8 @@ class Client:
 
     def send_status(self):
         status = self.get_status()
-        print(status)
         notificationClient = NotificationClient()
-        notificationClient.send_email("OPT EAD Status", status)
+        notificationClient.send_sms("OPT EAD Status", status)
 
     def get_status(self):
         self.driver.get('https://egov.uscis.gov/casestatus/landing.do')
@@ -49,8 +48,3 @@ class Client:
         time.sleep(2)
 
         return self.driver.find_element_by_xpath('/html/body/div[2]/form/div/div[1]/div/div/div[2]/div[3]/h1').text
-
-
-if __name__ == '__main__':
-    client = Client()
-    print(client.get_status())
