@@ -4,22 +4,35 @@ Assume `python main.py` is executed every morning.
 
 from weather import Client as WeatherClient
 from notification import Client as NotificationClient
-from uscis import Client as USCISClient
+from stock import Client as StockClient
 from datetime import date
 from typing import Callable
 
-notificationClient = NotificationClient()
-weatherClient = WeatherClient()
-uscisClient = USCISClient()
+notification_client = NotificationClient()
+weather_client = WeatherClient()
+stock_client = StockClient()
 
 
-def tick(task: Callable[[], None]):
-    try:
-        task()
-    except:
-        notificationClient.send_sms(
-            f"{name} Error", f"Hi Junhong, something went wrong when running the function '{task.__name__}'")
+class TickManager:
+
+    def __init__(self):
+        self.ticks = []
+
+    def add(tick: Callable[[], None]):
+        self.tick.appned(tick)
+
+    def run():
+        for tick in self.ticks:
+            try:
+                tick()
+            except:
+                notification_client.send_email(
+                    f"{name} Error", f"Hi Junhong, something went wrong when running the job '{tick.__name__}'")
 
 
-tick(weatherClient.send_sms_if_rain_today)
-tick(uscisClient.send_status)
+tick_manager = TickManager()
+
+tick_manager.add(weather_client.tick)
+tick_manager.add(stock_client.tick)
+
+tick_manager.run()

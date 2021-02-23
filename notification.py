@@ -1,7 +1,6 @@
 import os
 import smtplib
 import settings
-from email.message import EmailMessage
 
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')

@@ -10,12 +10,12 @@ LOS_ANGELES_LONGITUDE = -118.243683
 
 class Client:
 
-    def send_sms_if_rain_today(self):
+    def tick(self):
         if not self.check_rain_today():
             return
 
-        notificationClient = NotificationClient()
-        notificationClient.send_sms(
+        notification_client = NotificationClient()
+        notification_client.send_email(
             "Rain Alert 🌧", "Hey, it will rain today. Don't forget to bring an umbrella! ☂️")
 
     def check_rain_today(self):
@@ -33,3 +33,8 @@ class Client:
         response.raise_for_status()
         data = response.json()
         return data['hourly']
+
+
+if __name__ == '__main__':
+    client = Client()
+    client.tick()
