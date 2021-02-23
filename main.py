@@ -7,6 +7,7 @@ from notification import Client as NotificationClient
 from stock import Client as StockClient
 from datetime import date
 from typing import Callable
+import sys
 
 notification_client = NotificationClient()
 weather_client = WeatherClient()
@@ -27,7 +28,9 @@ class TickManager:
                 tick()
             except:
                 notification_client.send_email(
-                    f"{name} Error", f"Hi Junhong, something went wrong when running the job '{tick.__name__}'")
+                    f"Tick Manager Error", f"Hi Junhong, something went wrong when running the job '{tick.__name__}'")
+                sys.stderr.write(
+                    f"Tick Manager Error: something went wrong when running the job '{tick.__name__}'")
 
 
 tick_manager = TickManager()
