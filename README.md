@@ -16,7 +16,7 @@ Alice is hosted on [Heroku](https://www.heroku.com/). Every morning, [Heroku Sch
 python main.py
 ```
 
-to perform the tasks I tell her to do.
+to perform the tasks.
 
 ## What She Does
 
@@ -27,3 +27,9 @@ Here's the list of things she does for me:
 Every morning, she checks if it will rain today in Los Angeles, and reminds me to bring an umbrella if it does.
 
 - [Weather API](https://openweathermap.org/api)
+
+### S&P 500 Tracker
+
+Every morning, she tells me how much the price of S&P 500 has increased or decreased since last week.
+
+- [Alpha Vantage API](https://www.alphavantage.co/)
