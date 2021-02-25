@@ -19,10 +19,10 @@ class TickManager:
     def __init__(self):
         self.ticks = []
 
-    def add(tick: Callable[[], None]):
-        self.tick.appned(tick)
+    def add(self, tick: Callable[[], None]):
+        self.ticks.append(tick)
 
-    def run():
+    def run(self):
         for tick in self.ticks:
             try:
                 tick()

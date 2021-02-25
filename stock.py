@@ -15,10 +15,10 @@ class Client:
         notification_client = NotificationClient()
 
         if percentage > 0:
-            notification_client.send_email(
+            notification_client.send_sms(
                 f"S&P 500 Tracker +{abs(percentage)}% 👍", f"S&P 500 has increased by {abs(percentage)}% since last week")
         else:
-            notification_client.send_email(
+            notification_client.send_sms(
                 f"S&P 500 Tracker -{abs(percentage)}% 👎", f"S&P 500 has decreased by {abs(percentage)}% since last week")
 
     def get_percentage_diff_from_last_week(self):

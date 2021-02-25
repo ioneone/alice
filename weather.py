@@ -15,7 +15,7 @@ class Client:
             return
 
         notification_client = NotificationClient()
-        notification_client.send_email(
+        notification_client.send_sms(
             "Rain Alert 🌧", "Hey, it will rain today. Don't forget to bring an umbrella! ☂️")
 
     def check_rain_today(self):
