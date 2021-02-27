@@ -32,13 +32,10 @@ class Client:
             'https://www.alphavantage.co/query', params=params)
         response.raise_for_status()
         data = response.json()
-        time_series = data['Time Series (Daily)']
+        time_series = list(data['Time Series (Daily)'].values())
 
-        yesterday = (date.today() - timedelta(days=1)).strftime("%Y-%m-%d")
-        last_week = (date.today() - timedelta(days=7)).strftime("%Y-%m-%d")
-
-        price_yesterday = float(time_series[yesterday]['4. close'])
-        price_last_week = float(time_series[last_week]['4. close'])
+        price_yesterday = float(time_series[0]['4. close'])
+        price_last_week = float(time_series[6]['4. close'])
 
         diff = price_yesterday - price_last_week
         percentage = diff / price_last_week * 100

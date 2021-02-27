@@ -1,7 +1,8 @@
 import os
 import smtplib
 import settings
-
+from email.mime.text import MIMEText
+from email.header import Header
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')
 MY_PHONE_NUMBER = os.getenv('MY_PHONE_NUMBER')

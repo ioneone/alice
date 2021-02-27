@@ -19,23 +19,23 @@ class TickManager:
     def __init__(self):
         self.ticks = []
 
-    def add(self, tick: Callable[[], None]):
-        self.ticks.append(tick)
+    def add(self, name: str, tick: Callable[[], None]):
+        self.ticks.append((name, tick))
 
     def run(self):
-        for tick in self.ticks:
+        for name, tick in self.ticks:
             try:
                 tick()
             except:
                 notification_client.send_email(
-                    f"Tick Manager Error", f"Hi Junhong, something went wrong when running the job '{tick.__name__}'")
+                    f"Tick Manager Error", f"Hi Junhong, something went wrong when running the job '{name}'")
                 sys.stderr.write(
-                    f"Tick Manager Error: something went wrong when running the job '{tick.__name__}'")
+                    f"Tick Manager Error: something went wrong when running the job '{name}'")
 
 
 tick_manager = TickManager()
 
-tick_manager.add(weather_client.tick)
-tick_manager.add(stock_client.tick)
+tick_manager.add('check if it will rain today', weather_client.tick)
+tick_manager.add('check S&P 500 performance', stock_client.tick)
 
 tick_manager.run()
