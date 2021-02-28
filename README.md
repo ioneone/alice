@@ -8,7 +8,7 @@
 
 Alice is my artificial virtual assistant.
 
-## How It Works
+## How She Works
 
 Alice is hosted on [Heroku](https://www.heroku.com/). Every morning, [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler) executes:
 
@@ -28,8 +28,8 @@ Every morning, she checks if it will rain today in Los Angeles, and reminds me t
 
 - [Weather API](https://openweathermap.org/api)
 
-### S&P 500 Tracker 💹
+### S&P 500 Tracker 👀
 
-Every morning, she tells me how much the price of S&P 500 has increased or decreased since last week.
+Every morning, she tells me how much the price of S&P 500 has increased or decreased since last week and last month.
 
 - [Alpha Vantage API](https://www.alphavantage.co/)
