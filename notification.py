@@ -2,6 +2,7 @@ import os
 import smtplib
 import settings
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from email.header import Header
 
 MY_GMAIL_ADDRESS = os.getenv('MY_GMAIL_ADDRESS')
@@ -22,8 +23,14 @@ class Client:
 
     def send(self, to_addrs: str, subject: str, body: str):
         """Sends a message to me as Alice."""
-        header = f"From: Alice 🤖 <{BOT_GMAIL_ADDRESS}>\r\nTo: {to_addrs}\r\nSubject: {subject}"
-        msg = f"{header}\r\n\r\n{body}".encode('utf8')
+        msg = MIMEMultipart()
+        msg['From'] = BOT_GMAIL_ADDRESS
+        msg['To'] = to_addrs
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body))
+
+        # Message through SMS Gateway is not properly encoded unless there are 2 or more MIME parts.
+        msg.attach(MIMEText(''))
 
         with smtplib.SMTP('smtp.gmail.com') as connection:
             connection.starttls()
@@ -31,4 +38,10 @@ class Client:
                              password=BOT_GMAIL_PASSWORD)
             connection.sendmail(from_addr=BOT_GMAIL_ADDRESS,
                                 to_addrs=to_addrs,
-                                msg=msg)
+                                msg=msg.as_string())
+
+
+if __name__ == '__main__':
+    client = Client()
+    client.send_sms('subject 🙂', "Here is your tasty emoji: \U0001F31F")
+    client.send_email('subject 🙂', 'Here is your tasty emoji: \U0001F31F')
