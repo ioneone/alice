@@ -1,17 +1,17 @@
 """
-Assume `python main.py` is executed every morning. 
+Assume `python main.py` is executed every day in the morning. 
 """
 
 from weather import Client as WeatherClient
 from notification import Client as NotificationClient
-from stock import Client as StockClient
+from finance import Client as FinanceClient
 from datetime import date
 from typing import Callable
 import sys
 
 notification_client = NotificationClient()
 weather_client = WeatherClient()
-stock_client = StockClient()
+finance_client = FinanceClient()
 
 
 class TickManager:
@@ -36,6 +36,6 @@ class TickManager:
 tick_manager = TickManager()
 
 tick_manager.add('check if it will rain today', weather_client.tick)
-tick_manager.add('check S&P 500 performance', stock_client.tick)
+tick_manager.add('update ticker last price', finance_client.tick)
 
 tick_manager.run()
