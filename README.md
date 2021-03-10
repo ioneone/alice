@@ -28,8 +28,9 @@ Every morning, she checks if it will rain today in Los Angeles, and reminds me t
 
 - [Weather API](https://openweathermap.org/api)
 
-### S&P 500 Tracker 👀
+### Investment Management 🕵️
 
-Every morning, she tells me how much the price of S&P 500 has increased or decreased since last week and last month.
+Every morning, she updates the last prices of the stocks I own.
 
 - [Alpha Vantage API](https://www.alphavantage.co/)
+- [Google Sheets API](https://developers.google.com/sheets/api)
